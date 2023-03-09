@@ -1,0 +1,29 @@
+### Health Check
+GET http://localhost:5000/health_check
+
+### Sign Up
+POST http://localhost:5000/api/auth/signup 
+Content-Type: application/json
+
+{
+    "email": "test3@test.com",
+    "password": "12345678",
+    "username": "test3"
+}
+
+### Login
+POST http://localhost:5000/api/auth/login 
+Content-Type: application/json
+
+{
+    "email": "test3@test.com",
+    "password": "12345678"
+}
+
+
+### Current User
+GET http://localhost:5000/api/auth/current 
+
+### Logout
+POST http://localhost:5000/api/auth/logout 
+

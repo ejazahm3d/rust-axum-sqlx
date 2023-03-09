@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    volumes:
+      - rust_axum_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - rust-axum
+
+networks:
+  rust-axum:
+
+volumes:
+  rust_axum_data:
