@@ -15,27 +15,42 @@ name = "rust-axum"
 
 [dependencies]
 
-sqlx = { version = "0.6", default-features = false, features = [ "runtime-tokio-rustls", "macros", "postgres", "uuid", "chrono", "migrate", "offline"] }
-serde = { version = "1", features = ["derive"]}
+sqlx = { version = "0.6", default-features = false, features = [
+  "runtime-tokio-rustls",
+  "macros",
+  "postgres",
+  "uuid",
+  "chrono",
+  "migrate",
+  "offline",
+] }
+serde = { version = "1", features = ["derive"] }
 config = { version = "0.13", default-features = false, features = ["yaml"] }
-chrono = { version = "0.4.22", default-features = false, features = ["clock", "serde"] }
+chrono = { version = "0.4.23", default-features = false, features = [
+  "clock",
+  "serde",
+] }
 uuid = { version = "1", features = ["v4", "serde"] }
-bcrypt = "0.13"
+bcrypt = "0.14"
 serde_json = "1.0"
 jsonwebtoken = "8.2.0"
-futures = "0.3.25"
+futures = "0.3.26"
 anyhow = "1.0"
 thiserror = "1.0"
 sanitize-filename = "0.4"
 itertools = "0.10"
 axum = { version = "0.6", features = ["multipart"] }
-tower-http = { version = "0.3.0", features = ["cors", "fs"] }
-hyper = {version = "0.14"}
+tower-http = { version = "0.4", features = ["cors", "fs"] }
+hyper = { version = "0.14" }
 tokio = { version = "1", features = ["full"] }
 axum-sessions = "0.4.1"
-rand = {version= "0.8.5", features = ["min_const_gen"]}
+rand = { version = "0.8.5", features = ["min_const_gen"] }
 async-trait = "0.1"
 
 [dev-dependencies]
-reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls", "cookies"] }
+reqwest = { version = "0.11", default-features = false, features = [
+  "json",
+  "rustls-tls",
+  "cookies",
+] }
 tokio = { version = "1", features = ["macros"] }

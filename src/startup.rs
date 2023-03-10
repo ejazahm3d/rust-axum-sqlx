@@ -1,13 +1,14 @@
 use axum::{
-    routing::{get, get_service, post, IntoMakeService},
+    http::{header, Method},
+    routing::{get, post, IntoMakeService},
     Router, Server,
 };
 use axum_sessions::{async_session::MemoryStore, SessionLayer};
 use hyper::server::conn::AddrIncoming;
 use rand::Rng;
 use sqlx::PgPool;
-use std::{io, net::TcpListener};
-use tower_http::{cors::CorsLayer, services::ServeDir};
+use std::net::TcpListener;
+use tower_http::cors::CorsLayer;
 
 use crate::routes::auth;
 
@@ -27,26 +28,12 @@ pub fn run(listener: TcpListener, pool: PgPool) -> hyper::Result<App> {
 
     let cors_layer = CorsLayer::default()
         .allow_credentials(true)
-        .allow_methods([
-            axum::http::Method::GET,
-            axum::http::Method::POST,
-            axum::http::Method::PATCH,
-            axum::http::Method::DELETE,
-        ])
+        .allow_methods([Method::GET, Method::POST, Method::PATCH, Method::DELETE])
         .allow_origin(["http://localhost:5173".parse().unwrap()])
-        .allow_headers([axum::http::header::ACCEPT, axum::http::header::CONTENT_TYPE]);
+        .allow_headers([header::ACCEPT, header::CONTENT_TYPE]);
 
     let app = Router::new()
-        .route("/health_check", get(crate::routes::health_check))
-        .nest_service(
-            "/tmp",
-            get_service(ServeDir::new("tmp")).handle_error(|error: io::Error| async move {
-                (
-                    axum::http::StatusCode::INTERNAL_SERVER_ERROR,
-                    format!("Unhandled internal error: {}", error),
-                )
-            }),
-        )
+        .route("/api/health_check", get(crate::routes::health_check))
         .nest("/api", Router::new().nest("/auth", auth_routes))
         .with_state(pool)
         .layer(session_layer)
