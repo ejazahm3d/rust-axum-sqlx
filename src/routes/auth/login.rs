@@ -8,21 +8,31 @@ use axum::{extract::State, response::IntoResponse, Json};
 use axum_sessions::extractors::WritableSession;
 use chrono::{Duration, Utc};
 use sqlx::PgPool;
+use utoipa::ToSchema;
 use uuid::Uuid;
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, ToSchema)]
 pub struct LoginRequest {
     pub(crate) email: String,
     pub(crate) password: String,
 }
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, ToSchema)]
 pub struct LoginResponse {
     pub(crate) id: Uuid,
     pub(crate) email: String,
     pub(crate) username: String,
 }
 
+#[utoipa::path(
+        post,
+        path = "/auth/login",
+        request_body = LoginRequest,
+        responses(
+            (status = 200, description = "Successfully Logged In", body = LoginResponse),
+        ),
+        tag = "Auth"
+    )]
 pub async fn login(
     State(conn): State<PgPool>,
     mut session: WritableSession,

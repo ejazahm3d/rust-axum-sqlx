@@ -6,6 +6,7 @@ use axum::Json;
 use axum_sessions::extractors::WritableSession;
 use chrono::{Duration, Utc};
 use sqlx::PgPool;
+use utoipa::ToSchema;
 use uuid::Uuid;
 
 use crate::io::error::AppError;
@@ -13,7 +14,7 @@ use crate::services::{Claims, Password, Token};
 
 use crate::repos::UsersRepository;
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, ToSchema)]
 pub struct SignUpRequest {
     pub(crate) email: String,
     pub(crate) username: String,
@@ -21,13 +22,22 @@ pub struct SignUpRequest {
     pub(crate) avatar: Option<String>,
 }
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, ToSchema)]
 pub struct SignUpResponse {
     pub(crate) id: Uuid,
     pub(crate) email: String,
     pub(crate) username: String,
 }
 
+#[utoipa::path(
+        post,
+        path = "/auth/signup",
+        request_body = SignUpRequest,
+        responses(
+            (status = 201, description = "Successfully Signed Up", body = SignUpResponse),
+        ),
+        tag = "Auth"
+    )]
 pub async fn sign_up(
     State(conn): State<PgPool>,
     mut session: WritableSession,
