@@ -1,10 +1,10 @@
-version: '3'
+version: "3"
 
 services:
   postgres:
     image: postgres
     environment:
-      - POSTGRES_DB=
+      - POSTGRES_DB=rust-axum
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
     volumes:

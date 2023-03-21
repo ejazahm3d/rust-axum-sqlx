@@ -1,9 +1,9 @@
 database:
-  host: 'localhost'
+  host: "localhost"
   port: 5432
-  username: 'test'
-  password: 'test'
-  database_name: 'rust-axum'
+  username: "test"
+  password: "test"
+  database_name: "rust-axum"
 
 application:
   port: 5000

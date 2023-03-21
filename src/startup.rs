@@ -33,7 +33,7 @@ pub fn run(listener: TcpListener, pool: PgPool) -> hyper::Result<App> {
         .allow_headers([header::ACCEPT, header::CONTENT_TYPE]);
 
     let app = Router::new()
-        .route("/api/health_check", get(crate::routes::health_check))
+        .route("/api/health-check", get(crate::routes::health_check))
         .nest("/api", Router::new().nest("/auth", auth_routes))
         .with_state(pool)
         .layer(session_layer)
