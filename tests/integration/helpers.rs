@@ -137,7 +137,7 @@ impl TestUser {
 
 async fn configure_database(config: &DatabaseSettings) -> PgPool {
     // Create database
-    let mut connection = PgConnection::connect_with(&config.without_db())
+    let mut connection = PgConnection::connect_with(&config.without_db().database("postgres"))
         .await
         .expect("Failed to connect to Postgres");
 
