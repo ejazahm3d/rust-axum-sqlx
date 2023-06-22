@@ -42,7 +42,7 @@ This command installs the SQLx CLI with support for the Postgres database system
 1. Navigate to the project directory and run the following commands to copy .env file and run the database migrations:
 
 ```bash
-cp .env.example env
+cp .env.example .env
 sqlx migrate run
 ```
 
@@ -52,7 +52,7 @@ sqlx migrate run
 cargo run
 ```
 
-This will start the web server and make it available at `http://localhost:5000`.
+This will start the web server and make it available at `http://localhost:5002`.
 
-By default, the web server will run on `http://localhost:5000`. You can test the server by sending a GET request to `http://localhost:5000/api/health-check` using your preferred HTTP client.
-You can go to `http://localhost:5000/rapidoc/docs` for OpenAPI docs.
+By default, the web server will run on `http://localhost:5002`. You can test the server by sending a GET request to `http://localhost:5002/api/health-check` using your preferred HTTP client.
+You can go to `http://localhost:5002/rapidoc/docs` for OpenAPI docs.
